@@ -1,0 +1,47 @@
+<div class="wrapper">
+  <form [formGroup]="wordForm" (ngSubmit)="onSubmit()">
+    <ng-container formArrayName="rows">
+      <div class="container">
+        <ng-container
+          *ngFor="
+            let row of this.wordForm.get('rows')['controls'];
+            let word = index;
+            let rowsize = count
+          "
+        >
+          <ng-container [formGroupName]="word">
+            <div class="board">
+              <ng-container formArrayName="columns">
+                <ng-container
+                  *ngFor="
+                    let column of row.get('columns')['controls'];
+                    let char = index;
+                    let colsize = count
+                  "
+                >
+                  <ng-container [formGroupName]="char">
+                    <div class="cell">
+                      <input
+                        #character
+                        type="text"
+                        maxlength="1"
+                        formControlName="character"
+                        (keyup)="onKey($event, word, char, character)"
+                        [ngClass]="{
+                          last: char == colsize - 1 && !(word == rowsize - 1)
+                        }"
+                      />
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div *ngIf="wordForm.valid" class="submit">
+      <button #submit type="submit">Next</button>
+    </div>
+  </form>
+</div>

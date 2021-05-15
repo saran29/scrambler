@@ -1,0 +1,14 @@
+<div class="container">
+  <ng-container *ngIf="score < 10">
+    <app-sentence [sentence]="scrambled"></app-sentence>
+    <app-info></app-info>
+    <app-score [score]="score"></app-score>
+    <app-board
+      [sentence]="sentence"
+      (correctGuess)="handleCorrectGuess($event)"
+    ></app-board>
+  </ng-container>
+  <ng-container *ngIf="score == 10">
+    <div class="winner">You win!</div>
+  </ng-container>
+</div>
